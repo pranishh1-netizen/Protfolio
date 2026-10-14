@@ -1,20 +1,11 @@
-/* ---------- Profile photo fallback ---------- */
-// If images/pranish.jpg is missing, show the "PN" initials instead of a broken image.
-const photo = document.getElementById('profilePhoto');
-const frame = document.getElementById('photoFrame');
-if (photo) {
-    photo.addEventListener('error', () => frame.classList.add('no-photo'));
-    if (photo.complete && photo.naturalWidth === 0) frame.classList.add('no-photo');
-}
-
-/* ---------- Image slider ---------- */
+/* ================= IMAGE SLIDER (runs first, independent of everything else) ================= */
 class ImageSlider {
     constructor(selector) {
         this.slider = document.querySelector(selector);
-        if (!this.slider) return;
+        if (!this.slider) { console.error('Slider not found: ' + selector); return; }
 
         this.track = this.slider.querySelector('.slider-track');
-        this.slides = Array.from(this.track.children);
+        this.slides = Array.from(this.track.querySelectorAll('.slide'));
         this.prevButton = this.slider.querySelector('.prev');
         this.nextButton = this.slider.querySelector('.next');
         this.dotsContainer = this.slider.querySelector('.slider-dots');
@@ -33,7 +24,7 @@ class ImageSlider {
     }
 
     updateSliderPosition() {
-        this.track.style.transform = `translateX(${-this.currentIndex * 100}%)`;
+        this.track.style.transform = 'translateX(' + (-this.currentIndex * 100) + '%)';
         this.updateDots();
     }
 
@@ -49,25 +40,17 @@ class ImageSlider {
         this.nextButton.addEventListener('click', () => { this.nextSlide(); this.startAutoPlay(); });
         this.prevButton.addEventListener('click', () => { this.prevSlide(); this.startAutoPlay(); });
 
-        // Pause autoplay while the mouse is over the slider
         this.slider.addEventListener('mouseenter', () => clearInterval(this.timer));
         this.slider.addEventListener('mouseleave', () => this.startAutoPlay());
 
-        // Swipe on phones
         let startX = 0;
         this.slider.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; }, { passive: true });
         this.slider.addEventListener('touchend', (e) => {
             const diff = e.changedTouches[0].clientX - startX;
             if (Math.abs(diff) > 40) {
-                diff < 0 ? this.nextSlide() : this.prevSlide();
+                if (diff < 0) this.nextSlide(); else this.prevSlide();
                 this.startAutoPlay();
             }
-        });
-
-        // Arrow keys when the slider has focus
-        this.slider.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight') this.nextSlide();
-            if (e.key === 'ArrowLeft') this.prevSlide();
         });
     }
 
@@ -76,8 +59,8 @@ class ImageSlider {
         this.dots = [];
         this.slides.forEach((_, index) => {
             const dot = document.createElement('button');
-            dot.classList.add('dot');
-            dot.setAttribute('aria-label', `Go to slide ${index + 1}`);
+            dot.className = 'dot';
+            dot.setAttribute('aria-label', 'Go to slide ' + (index + 1));
             dot.addEventListener('click', () => { this.goTo(index); this.startAutoPlay(); });
             this.dotsContainer.appendChild(dot);
             this.dots.push(dot);
@@ -85,32 +68,50 @@ class ImageSlider {
     }
 
     updateDots() {
-        this.dots.forEach((dot, index) => {
-            dot.classList.toggle('active', index === this.currentIndex);
-        });
+        this.dots.forEach((dot, i) => dot.classList.toggle('active', i === this.currentIndex));
     }
 
     startAutoPlay() {
         clearInterval(this.timer);
-        this.timer = setInterval(() => this.nextSlide(), 5000);
+        this.timer = setInterval(() => this.nextSlide(), 4000);
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    new ImageSlider('.slider');
+function startSlider() {
+    try { new ImageSlider('.slider'); } catch (e) { console.error('Slider error:', e); }
+}
 
-    // Footer year
-    document.getElementById('year').textContent = new Date().getFullYear();
+/* ================= EXTRAS (errors here can no longer break the slider) ================= */
+function startExtras() {
+    try {
+        const photo = document.getElementById('profilePhoto');
+        const frame = document.getElementById('photoFrame');
+        if (photo && frame) {
+            photo.addEventListener('error', () => frame.classList.add('no-photo'));
+            if (photo.complete && photo.naturalWidth === 0) frame.classList.add('no-photo');
+        }
 
-    // Highlight the nav link of the section you're viewing
-    const links = document.querySelectorAll('.nav a');
-    const sections = Array.from(links).map(a => document.querySelector(a.getAttribute('href')));
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + entry.target.id));
-            }
+        const year = document.getElementById('year');
+        if (year) year.textContent = new Date().getFullYear();
+
+        const links = document.querySelectorAll('.nav a');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    links.forEach((l) => l.classList.toggle('active', l.getAttribute('href') === '#' + entry.target.id));
+                }
+            });
+        }, { rootMargin: '-40% 0px -55% 0px' });
+        links.forEach((a) => {
+            const target = document.querySelector(a.getAttribute('href'));
+            if (target) observer.observe(target);
         });
-    }, { rootMargin: '-40% 0px -55% 0px' });
-    sections.forEach(s => s && observer.observe(s));
-});
+    } catch (e) { console.error('Extras error:', e); }
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => { startSlider(); startExtras(); });
+} else {
+    startSlider();
+    startExtras();
+}

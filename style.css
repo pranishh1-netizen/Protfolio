@@ -196,7 +196,7 @@ p { max-width: 60ch; margin-bottom: 1rem; }
     touch-action: pan-y;
 }
 .slider-track { display: flex; transition: transform 0.5s ease; }
-.slide { min-width: 100%; position: relative; }
+.slide { flex: 0 0 100%; min-width: 100%; position: relative; }
 .slide img {
     width: 100%;
     aspect-ratio: 16 / 10;
