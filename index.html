@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Portfolio of Pranish Neupane" />
+    <title>Pranish Neupane | Portfolio</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div class="layout">
+
+        <!-- ============ SIDEBAR ============ -->
+        <aside class="sidebar">
+            <figure class="photo-frame" id="photoFrame">
+
+                <!-- ★★★ PUT YOUR PHOTO HERE ★★★
+                     1. Save your photo inside the "images" folder (e.g. images/pranish.jpg)
+                     2. Change the src below to match your file name -->
+                <img id="profilePhoto"
+                     src="pranish.jpeg"
+                     alt="Photo of Pranish Neupane" />
+
+                <span class="photo-fallback" aria-hidden="true">PN</span>
+            </figure>
+
+            <h1 class="name">Pranish Neupane</h1>
+            <p class="role">Web developer &amp; student</p>
+
+            <nav class="nav" aria-label="Main">
+                <a href="#about" class="active">About</a>
+                <a href="#skills">Skills</a>
+                <a href="#projects">Projects</a>
+                <a href="#gallery">Gallery</a>
+                <a href="#contact">Contact</a>
+            </nav>
+
+            <a class="btn btn-solid" href="#contact">Hire me</a>
+        </aside>
+
+        <!-- ============ MAIN ============ -->
+        <main class="content">
+
+            <!-- ABOUT -->
+            <section id="about" class="section">
+                <h2>Hi, I'm Pranish.</h2>
+                <p class="lead">
+                    I build clean, fast websites and I'm learning something new every week.
+                    I like turning plain ideas into pages that people actually enjoy using.
+                </p>
+                <p>
+                    <!-- Edit this paragraph with your own story -->
+                    I live in Nepal and I'm focused on front-end development: HTML, CSS and
+                    JavaScript. When I'm not coding, you'll find me exploring design, photography
+                    and the hills around home.
+                </p>
+
+                <dl class="facts">
+                    <div><dt>Based in</dt><dd>Nepal</dd></div>
+                    <div><dt>Focus</dt><dd>Front-end development</dd></div>
+                    <div><dt>Status</dt><dd>Open to projects</dd></div>
+                </dl>
+            </section>
+
+            <!-- SKILLS -->
+            <section id="skills" class="section">
+                <h2>Skills</h2>
+                <ul class="skills">
+                    <li><span>HTML</span><i style="--lvl:90%"></i></li>
+                    <li><span>CSS</span><i style="--lvl:80%"></i></li>
+                    <li><span>JavaScript</span><i style="--lvl:70%"></i></li>
+                    <li><span>Git &amp; GitHub</span><i style="--lvl:60%"></i></li>
+                    <li><span>Responsive design</span><i style="--lvl:80%"></i></li>
+                </ul>
+            </section>
+
+            <!-- PROJECTS -->
+            <section id="projects" class="section">
+                <h2>Projects</h2>
+                <div class="projects">
+                    <article class="project">
+                        <h3>Image Slider</h3>
+                        <p>A responsive slider with arrows, dots, swipe and autoplay, built with plain JavaScript.</p>
+                        <p class="tags">HTML · CSS · JavaScript</p>
+                        <a href="#gallery">See it below</a>
+                    </article>
+                    <article class="project">
+                        <h3>Project two</h3>
+                        <p>Write one short sentence about what this project does and why you built it.</p>
+                        <p class="tags">Add your tools here</p>
+                        <a href="#">View project</a>
+                    </article>
+                    <article class="project">
+                        <h3>Project three</h3>
+                        <p>Write one short sentence about what this project does and why you built it.</p>
+                        <p class="tags">Add your tools here</p>
+                        <a href="#">View project</a>
+                    </article>
+                </div>
+            </section>
+
+            <!-- GALLERY (your slider) -->
+            <section id="gallery" class="section">
+                <h2>Gallery</h2>
+                <div class="slider" aria-roledescription="carousel" aria-label="Photo gallery">
+                    <div class="slider-track">
+
+                        <!-- ★ Change each src to your own images (inside the images folder) -->
+                        <div class="slide">
+                            <img src="images/flower.png" alt="Flower" />
+                            <p class="caption">Flower</p>
+                        </div>
+                        <div class="slide">
+                            <img src="images/Sky1.png" alt="Sky, first view" />
+                            <p class="caption">Sky one</p>
+                        </div>
+                        <div class="slide">
+                            <img src="images/Frieren.png" alt="Frieren artwork" />
+                            <p class="caption">Frieren</p>
+                        </div>
+                        <div class="slide">
+                            <img src="images/sky2.png" alt="Sky, second view" />
+                            <p class="caption">Sky two</p>
+                        </div>
+                        <div class="slide">
+                            <img src="images/sky3.png" alt="Sky, third view" />
+                            <p class="caption">Sky three</p>
+                        </div>
+                    </div>
+
+                    <button class="slider-btn prev" aria-label="Previous slide">&#10094;</button>
+                    <button class="slider-btn next" aria-label="Next slide">&#10095;</button>
+                    <div class="slider-dots"></div>
+                </div>
+            </section>
+
+            <!-- CONTACT -->
+            <section id="contact" class="section">
+                <h2>Let's work together</h2>
+                <p>Tell me about your idea and I'll reply within a couple of days.</p>
+
+                <ul class="contact-list">
+                    <!-- Replace these with your real details -->
+                    <li><span>Email</span><a href="mailto:yourname@example.com">neupanepranishh1@gmail.com</a></li>
+                    <li><span>GitHub</span><a href="https://github.com/your-username">https://github.com/pranishh1-netizen/Protfolio</a></li>
+                    <li><span>Instagram</span><a href="https://instagram.com/your-username">Pranish</a></li>
+                </ul>
+
+                <footer class="footer">© <span id="year"></span> Pranish Neupane</footer>
+            </section>
+
+        </main>
+    </div>
+</body>
+</html>
